@@ -23,5 +23,10 @@ public class FPSMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(horizontalMovement, 0f, verticalMovement).normalized;
 
         rb.MovePosition(rb.position + transform.TransformDirection(moveDirection) * movementSpeed * Time.fixedDeltaTime);
+
+        if (moveDirection != Vector3.zero)
+        {
+            SoundManager.instance.PlayFootstepSound();
+        }
     }
 }
