@@ -12,7 +12,7 @@ public class FPSMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; 
+        rb.freezeRotation = true;
     }
 
     void FixedUpdate()
@@ -28,5 +28,8 @@ public class FPSMovement : MonoBehaviour
         {
             SoundManager.instance.PlayFootstepSound();
         }
+
+        Vector3 currentRotation = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
     }
 }
