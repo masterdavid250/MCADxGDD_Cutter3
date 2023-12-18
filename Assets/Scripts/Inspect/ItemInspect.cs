@@ -4,25 +4,6 @@ using UnityEngine;
 
 public class ItemInspect : MonoBehaviour
 {
-    //public
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<PlayerInspect>() != null)
-        {
-            other.GetComponent<PlayerInspect>().canPlayerInspect = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<PlayerInspect>() != null)
-        {
-            other.GetComponent<PlayerInspect>().canPlayerInspect = false;
-        }
-    }*/
-
-
     public GameObject inspectionUI;
     public GameObject itemObject;
     public Item item; 
@@ -51,6 +32,7 @@ public class ItemInspect : MonoBehaviour
         if (other.GetComponent<PlayerInspect>() != null) 
         {
             canInteract = true;
+            JoystickMasterScript.instance.ItemInspectSetup(this.gameObject, canInteract, isInspecting);
         }
     }
 
@@ -58,6 +40,7 @@ public class ItemInspect : MonoBehaviour
     {
         if (other.GetComponent<PlayerInspect>() != null)
         {
+            JoystickMasterScript.instance.RemoveSetupItem(SetupItemType.Item);
             canInteract = false;
             if (isInspecting)
             {
@@ -66,19 +49,21 @@ public class ItemInspect : MonoBehaviour
         }
     }
 
-    void StartInspection()
+    public void StartInspection()
     {
         inspectionUI.SetActive(true);
         isInspecting = true;
+        JoystickMasterScript.instance.ItemInspectSetup(this.gameObject, canInteract, isInspecting);
     }
 
-    void CloseInspectionUI()
+    public void CloseInspectionUI()
     {
         inspectionUI.SetActive(false);
         isInspecting = false;
+        JoystickMasterScript.instance.ItemInspectSetup(this.gameObject, canInteract, isInspecting);
     }
 
-    void AddToInventory()
+    public void AddToInventory()
     {
         Inventory playerInventory = FindObjectOfType<Inventory>(); 
         if (playerInventory != null)
@@ -87,6 +72,7 @@ public class ItemInspect : MonoBehaviour
             if (wasPickedUp)
             {
                 CloseInspectionUI();
+                JoystickMasterScript.instance.RemoveSetupItem(SetupItemType.Item);
                 Destroy(itemObject);
                 Destroy(gameObject); 
             }

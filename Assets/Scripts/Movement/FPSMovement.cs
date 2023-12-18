@@ -9,6 +9,11 @@ public class FPSMovement : MonoBehaviour
 
     private Rigidbody rb;
 
+    private void Awake()
+    {
+        JoystickMasterScript.instance.PlayerSetup(this.gameObject.transform, this.GetComponentInChildren<Camera>()); 
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();

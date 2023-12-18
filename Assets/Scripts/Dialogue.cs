@@ -9,7 +9,12 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
 
-    private int index; 
+    private int index;
+
+    private void Awake()
+    {
+        JoystickMasterScript.instance.SetupDialogueBox(this.gameObject); 
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,15 +30,20 @@ public class Dialogue : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (textComponent.text == lines[index])
-            {
-                NextLine(); 
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
+            CheckNextLine();             
+        }
+    }
+
+    public void CheckNextLine()
+    {
+        if (textComponent.text == lines[index])
+        {
+            NextLine();
+        }
+        else
+        {
+            StopAllCoroutines();
+            textComponent.text = lines[index];
         }
     }
 
@@ -64,8 +74,8 @@ public class Dialogue : MonoBehaviour
         {
             this.GetComponentInParent<FPSMovement>().enabled = true;
             this.GetComponentInParent<FPSCameraController>().enabled = true;
+            JoystickMasterScript.instance.RemoveSetupItem(SetupItemType.Dialogue);   
             Destroy(gameObject); 
-            //gameObject.SetActive(false);
         }
     }
 }

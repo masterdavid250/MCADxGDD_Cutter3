@@ -10,6 +10,11 @@ public class Flashlight : MonoBehaviour
     private Light flashlight;
     private AudioSource audioSource;
 
+    private void Awake()
+    {
+        JoystickMasterScript.instance.FlashlightSetup(this.gameObject); 
+    }
+
     void Start()
     {
         flashlight = GetComponent<Light>();
@@ -26,15 +31,20 @@ public class Flashlight : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            flashlight.enabled = !flashlight.enabled; 
-            if (flashlight.enabled && toggleOnSoundClip != null)
-            {
-                audioSource.PlayOneShot(toggleOnSoundClip);
-            }
-            else if (!flashlight.enabled && toggleOffSoundClip != null)
-            {
-                audioSource.PlayOneShot(toggleOffSoundClip);
-            }
+            OpenAndCloseFlashlight();
+        }
+    }
+
+    public void OpenAndCloseFlashlight()
+    {
+        flashlight.enabled = !flashlight.enabled;
+        if (flashlight.enabled && toggleOnSoundClip != null)
+        {
+            audioSource.PlayOneShot(toggleOnSoundClip);
+        }
+        else if (!flashlight.enabled && toggleOffSoundClip != null)
+        {
+            audioSource.PlayOneShot(toggleOffSoundClip);
         }
     }
 }
