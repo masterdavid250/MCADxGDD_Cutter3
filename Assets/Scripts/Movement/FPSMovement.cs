@@ -6,6 +6,7 @@ using UnityEngine;
 public class FPSMovement : MonoBehaviour
 {
     public float movementSpeed = 5f;
+    public float deadzoneThreshold = 0.5f;
 
     private Rigidbody rb;
 
@@ -24,6 +25,12 @@ public class FPSMovement : MonoBehaviour
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
+
+        if (Mathf.Abs(horizontalMovement) < deadzoneThreshold)
+            horizontalMovement = 0f;
+
+        if (Mathf.Abs(verticalMovement) < deadzoneThreshold)
+            verticalMovement = 0f;
 
         Vector3 moveDirection = new Vector3(horizontalMovement, 0f, verticalMovement).normalized;
 

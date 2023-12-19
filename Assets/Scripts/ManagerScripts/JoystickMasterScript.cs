@@ -30,6 +30,8 @@ public class JoystickMasterScript : MonoBehaviour
 
     Vector2 joystickLookInput;
 
+    private float rotationX = 0f;
+
     private void Awake()
     {
         if (instance == null)
@@ -56,6 +58,14 @@ public class JoystickMasterScript : MonoBehaviour
         controls.Gameplay.Look.performed += ctx => joystickLookInput = ctx.ReadValue<Vector2>();
         controls.Gameplay.Look.canceled += ctx => joystickLookInput = Vector2.zero;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Start()
+    {
+        if (playerCamera != null)
+        {
+            rotationX = playerCamera.transform.localEulerAngles.x;
+        }
     }
 
     public void NextButton()
@@ -162,10 +172,13 @@ public class JoystickMasterScript : MonoBehaviour
         {
             float lookX = joystickLookInput.x * sensitivity * Time.deltaTime;
             float lookY = joystickLookInput.y * sensitivity * Time.deltaTime;
+
             playerBody.Rotate(Vector3.up * lookX);
-            Vector3 currentRotation = playerCamera.transform.eulerAngles;
-            float desiredRotationX = currentRotation.x - lookY;
-            playerCamera.transform.eulerAngles = new Vector3(desiredRotationX, currentRotation.y, currentRotation.z);
+
+            rotationX -= lookY;
+            rotationX = Mathf.Clamp(rotationX, -80f, 80f);
+
+            playerCamera.transform.localEulerAngles = new Vector3(rotationX, playerCamera.transform.localEulerAngles.y, 0f);
         }
     }
 }
