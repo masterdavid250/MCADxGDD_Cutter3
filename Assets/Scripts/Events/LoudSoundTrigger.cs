@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class LoudSoundTrigger : MonoBehaviour
 {
@@ -13,8 +12,6 @@ public class LoudSoundTrigger : MonoBehaviour
 
     private bool didPlayerEnter = false;
 
-    [SerializeField] private UnityEvent onPlayerEnter;
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("ENTERED");
@@ -23,7 +20,6 @@ public class LoudSoundTrigger : MonoBehaviour
             if (!didPlayerEnter)
             {
                 StartCoroutine(SpawnAndFaceObject(other.gameObject));
-                onPlayerEnter?.Invoke();
             }
         }
     }

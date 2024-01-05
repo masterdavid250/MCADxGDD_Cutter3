@@ -18,7 +18,9 @@ public class Flashlight : MonoBehaviour
     void Start()
     {
         flashlight = GetComponent<Light>();
-        flashlight.enabled = false; 
+
+        //FLASHLIGHT STARTS ON
+        //flashlight.enabled = false; 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
