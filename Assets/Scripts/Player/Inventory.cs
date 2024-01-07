@@ -6,20 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public int space = 10; 
     public List<Item> items = new List<Item>();
-    //public GameObject inventoryUI;
-
-    /*private void Start()
-    {
-        CloseInventory(); 
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ToggleInventory(); 
-        }
-    }*/
+    public int sphereNumber = 0;
+    public int spherePlaced = 0;
 
     public bool AddItem(Item item)
     {
@@ -40,13 +28,43 @@ public class Inventory : MonoBehaviour
         items.Remove(item);
     }
 
-   /* public void ToggleInventory()
+    public Item GetItemByID(int id)
     {
-        inventoryUI.SetActive(!inventoryUI.activeSelf); 
+        foreach (Item item in items)
+        {
+            if (item.itemID == id)
+            {
+                return item;
+            }
+        }
+        return null; 
     }
-
-    public void CloseInventory()
-    {
-        inventoryUI.SetActive(false); 
-    }*/
 }
+
+//public GameObject inventoryUI;
+
+/*private void Start()
+{
+    CloseInventory(); 
+}
+
+private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.T))
+    {
+        ToggleInventory(); 
+    }
+}*/
+
+
+
+
+/* public void ToggleInventory()
+ {
+     inventoryUI.SetActive(!inventoryUI.activeSelf); 
+ }
+
+ public void CloseInventory()
+ {
+     inventoryUI.SetActive(false); 
+ }*/

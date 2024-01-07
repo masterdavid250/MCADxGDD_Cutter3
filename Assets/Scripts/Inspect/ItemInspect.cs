@@ -51,14 +51,20 @@ public class ItemInspect : MonoBehaviour
 
     public void StartInspection()
     {
-        inspectionUI.SetActive(true);
+        if (inspectionUI != null)
+        {
+            inspectionUI.SetActive(true);
+        }
         isInspecting = true;
         JoystickMasterScript.instance.ItemInspectSetup(this.gameObject, canInteract, isInspecting);
     }
 
     public void CloseInspectionUI()
     {
-        inspectionUI.SetActive(false);
+        if (inspectionUI != null)
+        {
+            inspectionUI.SetActive(false);
+        }
         isInspecting = false;
         JoystickMasterScript.instance.ItemInspectSetup(this.gameObject, canInteract, isInspecting);
     }
@@ -73,7 +79,10 @@ public class ItemInspect : MonoBehaviour
             {
                 CloseInspectionUI();
                 JoystickMasterScript.instance.RemoveSetupItem(SetupItemType.Item);
-                Destroy(itemObject);
+                if (itemObject != null)
+                {
+                    Destroy(itemObject);
+                }
                 Destroy(gameObject); 
             }
         }

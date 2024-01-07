@@ -7,7 +7,9 @@ public class Flashlight : MonoBehaviour
     public AudioClip toggleOnSoundClip; 
     public AudioClip toggleOffSoundClip; 
 
-    private Light flashlight;
+    public Light flashlight;
+
+    public bool canYouUseFlashlight = true; 
     private AudioSource audioSource;
 
     private void Awake()
@@ -35,18 +37,23 @@ public class Flashlight : MonoBehaviour
         {
             OpenAndCloseFlashlight();
         }
+
+        Debug.Log(canYouUseFlashlight); 
     }
 
     public void OpenAndCloseFlashlight()
     {
-        flashlight.enabled = !flashlight.enabled;
-        if (flashlight.enabled && toggleOnSoundClip != null)
+        if (canYouUseFlashlight)
         {
-            audioSource.PlayOneShot(toggleOnSoundClip);
-        }
-        else if (!flashlight.enabled && toggleOffSoundClip != null)
-        {
-            audioSource.PlayOneShot(toggleOffSoundClip);
+            flashlight.enabled = !flashlight.enabled;
+            if (flashlight.enabled && toggleOnSoundClip != null)
+            {
+                audioSource.PlayOneShot(toggleOnSoundClip);
+            }
+            else if (!flashlight.enabled && toggleOffSoundClip != null)
+            {
+                audioSource.PlayOneShot(toggleOffSoundClip);
+            }
         }
     }
 }
